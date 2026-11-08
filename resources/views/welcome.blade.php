@@ -1437,4 +1437,5 @@
             });
         </script>
     </x-slot:scripts>
+    
 </x-layouts.app>

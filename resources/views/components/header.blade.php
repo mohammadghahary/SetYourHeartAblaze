@@ -142,6 +142,58 @@ document.documentElement.setAttribute('lang', language);" @scroll.window="scroll
         <!-- Action Area -->
         <div class="flex items-center gap-2 sm:gap-3">
 
+            @auth
+                <!-- User Account Dropdown -->
+                <div class="relative" x-data="{ userMenuOpen: false }" @click.outside="userMenuOpen = false">
+                    <button
+                        type="button"
+                        @click="userMenuOpen = !userMenuOpen"
+                        class="glass-pill px-3 sm:px-4 py-1.5 text-primary hover:text-on-surface flex items-center gap-2 rounded-full font-label-md text-label-md transition-all focus:outline-none"
+                    >
+                        <div class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-[11px]">
+                            {{ mb_substr(Auth::user()->name, 0, 1) }}
+                        </div>
+                        <span class="max-w-[120px] truncate hidden md:inline">{{ Auth::user()->name }}</span>
+                        <span class="material-symbols-outlined text-[18px] transition-transform" :class="{ 'rotate-180': userMenuOpen }">expand_more</span>
+                    </button>
+
+                    <div
+                        x-show="userMenuOpen"
+                        x-transition:enter="transition ease-out duration-150"
+                        x-transition:enter-start="opacity-0 scale-95"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-100"
+                        x-transition:leave-start="opacity-100 scale-100"
+                        x-transition:leave-end="opacity-0 scale-95"
+                        class="absolute end-0 mt-2 w-48 rounded-2xl bg-surface-container-lowest/95 dark:bg-surface-container-lowest/95 backdrop-blur-2xl shadow-xl border border-white/80 dark:border-white/10 py-2 z-50 text-start"
+                        style="display: none;"
+                    >
+                        <div class="px-4 py-2 border-b border-outline-variant/30 text-start">
+                            <p class="font-label-md text-label-md font-semibold text-primary truncate">{{ Auth::user()->name }}</p>
+                            <p class="font-body-sm text-body-sm text-on-surface-variant truncate" dir="ltr">{{ Auth::user()->email }}</p>
+                        </div>
+                        <form method="POST" action="{{ route('logout') }}" class="w-full">
+                            @csrf
+                            <button
+                                type="submit"
+                                class="w-full px-4 py-2.5 text-start font-label-md text-label-md text-error hover:bg-error-container/20 flex items-center gap-2 transition-colors cursor-pointer"
+                            >
+                                <span class="material-symbols-outlined text-[18px]">logout</span>
+                                <span>{{ __('auth.logout') }}</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            @else
+                <!-- Guest Login Link -->
+                <a
+                    href="{{ route('login') }}"
+                    class="glass-pill px-3.5 sm:px-4 py-1.5 text-primary hover:text-on-surface hover:bg-white flex items-center gap-1.5 rounded-full font-label-md text-label-md transition-all shadow-sm"
+                >
+                    <span class="hidden sm:inline">{{ __('auth.login_now') }}</span>
+                </a>
+            @endauth
+
             <!-- Primary Action CTA -->
             <x-button href="#consultation" variant="primary" size="md" class="hidden sm:inline-flex">
                 {{ __('header.start_consultation') }}
@@ -179,6 +231,49 @@ document.documentElement.setAttribute('lang', language);" @scroll.window="scroll
         </nav>
 
         <div class="pt-4 border-t border-outline-variant/30 dark:border-outline-variant/40 flex flex-col gap-3">
+            @auth
+                <div class="flex items-center gap-3 px-2 py-1">
+                    <div class="w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm">
+                        {{ mb_substr(Auth::user()->name, 0, 1) }}
+                    </div>
+                    <div class="flex flex-col text-start">
+                        <span class="font-label-md text-label-md font-bold text-primary">{{ Auth::user()->name }}</span>
+                        <span class="font-body-sm text-body-sm text-on-surface-variant" dir="ltr">{{ Auth::user()->email }}</span>
+                    </div>
+                </div>
+
+                <form method="POST" action="{{ route('logout') }}" class="w-full">
+                    @csrf
+                    <button
+                        type="submit"
+                        class="w-full py-2.5 px-4 rounded-xl bg-error-container/20 text-error font-semibold flex items-center justify-center gap-2 hover:bg-error-container/40 transition-colors"
+                        @click="mobileMenuOpen = false"
+                    >
+                        <span class="material-symbols-outlined text-[18px]">logout</span>
+                        <span>{{ __('auth.logout') }}</span>
+                    </button>
+                </form>
+            @else
+                <div class="grid grid-cols-2 gap-2">
+                    <a
+                        href="{{ route('login') }}"
+                        class="py-2.5 px-4 rounded-full glass-card text-center font-label-md text-label-md text-primary font-semibold hover:bg-white flex items-center justify-center gap-1.5"
+                        @click="mobileMenuOpen = false"
+                    >
+                        <span class="material-symbols-outlined text-[18px]">login</span>
+                        <span>{{ __('auth.login_now') }}</span>
+                    </a>
+                    <a
+                        href="{{ route('register') }}"
+                        class="py-2.5 px-4 rounded-full bg-primary text-on-primary text-center font-label-md text-label-md font-semibold hover:bg-primary-container flex items-center justify-center gap-1.5"
+                        @click="mobileMenuOpen = false"
+                    >
+                        <span class="material-symbols-outlined text-[18px]">person_add</span>
+                        <span>{{ __('auth.register_now') }}</span>
+                    </a>
+                </div>
+            @endauth
+
             <x-button href="#consultation" variant="primary" size="lg" class="w-full justify-center text-center"
                 @click="mobileMenuOpen = false">
                 {{ __('header.start_consultation') }}
