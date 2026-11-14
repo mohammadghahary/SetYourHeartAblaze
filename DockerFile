@@ -8,7 +8,9 @@ RUN apk update && apk add --no-cache \
     icu-dev \
     zip \
     unzip \
-    oniguruma-dev
+    oniguruma-dev \
+    nodejs \ 
+    npm
 
 RUN docker-php-ext-install \
     pdo_mysql \
