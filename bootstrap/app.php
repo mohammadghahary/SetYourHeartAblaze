@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -12,7 +13,21 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'setLocale' => SetLocale::class,
+        ]);
+
+        $middleware->redirectGuestsTo(function (Request $request): string {
+            $locale = $request->route('locale') ?? app()->getLocale();
+
+            return route('login', ['locale' => $locale]);
+        });
+
+        $middleware->redirectUsersTo(function (Request $request): string {
+            $locale = $request->route('locale') ?? app()->getLocale();
+
+            return route('home', ['locale' => $locale]);
+        });
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

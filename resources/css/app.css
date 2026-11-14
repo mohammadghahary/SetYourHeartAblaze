@@ -2,8 +2,333 @@
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/* Enable class-based dark mode so <html class="dark"> activates dark: variants */
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* Brand & Surface Colors (Light Mode Defaults) */
+    --color-surface: #e2fffe;
+    --color-surface-dim: #c0e0df;
+    --color-surface-bright: #e2fffe;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #d9faf9;
+    --color-surface-container: #d4f4f3;
+    --color-surface-container-high: #ceeeee;
+    --color-surface-container-highest: #c8e9e8;
+    --color-surface-variant: #c8e9e8;
+    --color-on-surface: #002020;
+    --color-on-surface-variant: #3e4949;
+    --color-inverse-surface: #173535;
+    --color-inverse-on-surface: #d6f7f6;
+    --color-outline: #6e7979;
+    --color-outline-variant: #bdc9c8;
+    --color-surface-tint: #006a6a;
+
+    --color-primary: #006767;
+    --color-on-primary: #ffffff;
+    --color-primary-container: #008282;
+    --color-on-primary-container: #f3fffe;
+    --color-inverse-primary: #73d6d6;
+    --color-primary-fixed: #90f3f2;
+    --color-primary-fixed-dim: #73d6d6;
+    --color-on-primary-fixed: #002020;
+    --color-on-primary-fixed-variant: #004f4f;
+
+    --color-secondary: #356855;
+    --color-on-secondary: #ffffff;
+    --color-secondary-container: #b5ebd3;
+    --color-on-secondary-container: #396c59;
+    --color-secondary-fixed: #b8eed6;
+    --color-secondary-fixed-dim: #9cd2ba;
+    --color-on-secondary-fixed: #002116;
+    --color-on-secondary-fixed-variant: #1b4f3e;
+
+    --color-tertiary: #8f490e;
+    --color-on-tertiary: #ffffff;
+    --color-tertiary-container: #ad6126;
+    --color-on-tertiary-container: #fffbff;
+    --color-tertiary-fixed: #ffdcc6;
+    --color-tertiary-fixed-dim: #ffb786;
+    --color-on-tertiary-fixed: #311400;
+    --color-on-tertiary-fixed-variant: #723600;
+
+    --color-error: #ba1a1a;
+    --color-on-error: #ffffff;
+    --color-error-container: #ffdad6;
+    --color-on-error-container: #93000a;
+
+    --color-background: #e2fffe;
+    --color-on-background: #002020;
+
+    /* Custom Spacing Tokens */
+    --spacing-gutter: 1.5rem;
+    --spacing-gutter-mobile: 1rem;
+    --spacing-margin: 3rem;
+    --spacing-margin-mobile: 1.25rem;
+    --spacing-space-xs: 0.375rem;
+    --spacing-space-sm: 0.75rem;
+    --spacing-space-md: 1.25rem;
+    --spacing-space-lg: 2rem;
+    --spacing-space-xl: 3rem;
+
+    /* Primary Font */
+    --font-sans: 'Vazirmatn', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+
+    /* Typography Scale */
+    --text-display-lg: 52px;
+    --text-display-lg--line-height: 68px;
+    --text-display-lg-mobile: 34px;
+    --text-display-lg-mobile--line-height: 44px;
+    --text-headline-xl: 38px;
+    --text-headline-xl--line-height: 48px;
+    --text-headline-xl-mobile: 28px;
+    --text-headline-xl-mobile--line-height: 36px;
+    --text-headline-lg: 28px;
+    --text-headline-lg--line-height: 38px;
+    --text-headline-md: 22px;
+    --text-headline-md--line-height: 30px;
+    --text-body-lg: 18px;
+    --text-body-lg--line-height: 28px;
+    --text-body-md: 15px;
+    --text-body-md--line-height: 24px;
+    --text-body-sm: 13px;
+    --text-body-sm--line-height: 20px;
+    --text-label-lg: 15px;
+    --text-label-lg--line-height: 22px;
+    --text-label-md: 13px;
+    --text-label-md--line-height: 18px;
+    --text-label-sm: 11px;
+    --text-label-sm--line-height: 16px;
+}
+
+/* ==========================================================================
+   DARK MODE COLOR OVERRIDES (.dark)
+   ========================================================================== */
+.dark {
+    color-scheme: dark;
+
+    /* Surface Tokens */
+    --color-surface: #051424;
+    --color-surface-dim: #051424;
+    --color-surface-bright: #2c3a4c;
+    --color-surface-container-lowest: #010f1f;
+    --color-surface-container-low: #0d1c2d;
+    --color-surface-container: #122131;
+    --color-surface-container-high: #1c2b3c;
+    --color-surface-container-highest: #273647;
+    --color-surface-variant: #1e293b;
+    --color-on-surface: #f8fafc;
+    --color-on-surface-variant: #94a3b8;
+    --color-inverse-surface: #d4e4fa;
+    --color-inverse-on-surface: #233143;
+    --color-outline: #869393;
+    --color-outline-variant: #334155;
+    --color-surface-tint: #4edad9;
+
+    /* Primary Tokens */
+    --color-primary: #4edad9;
+    --color-on-primary: #003737;
+    --color-primary-container: #008282;
+    --color-on-primary-container: #00403f;
+    --color-inverse-primary: #006a6a;
+    --color-primary-fixed: #70f6f6;
+    --color-primary-fixed-dim: #4edad9;
+    --color-on-primary-fixed: #002020;
+    --color-on-primary-fixed-variant: #004f4f;
+
+    /* Secondary Tokens */
+    --color-secondary: #ffb68d;
+    --color-on-secondary: #532200;
+    --color-secondary-container: #9b4600;
+    --color-on-secondary-container: #ffceb5;
+    --color-secondary-fixed: #ffdbc9;
+    --color-secondary-fixed-dim: #ffb68d;
+    --color-on-secondary-fixed: #331200;
+    --color-on-secondary-fixed-variant: #763300;
+
+    /* Tertiary Tokens */
+    --color-tertiary: #8f490e;
+    --color-on-tertiary: #ffffff;
+    --color-tertiary-container: #ad6126;
+    --color-on-tertiary-container: #004039;
+    --color-tertiary-fixed: #71f8e4;
+    --color-tertiary-fixed-dim: #4fdbc8;
+    --color-on-tertiary-fixed: #00201c;
+    --color-on-tertiary-fixed-variant: #005048;
+
+    /* Error Tokens */
+    --color-error: #ffb4ab;
+    --color-on-error: #690005;
+    --color-error-container: #93000a;
+    --color-on-error-container: #ffdad6;
+
+    /* Background Tokens */
+    --color-background: #0b131e;
+    --color-on-background: #d4e4fa;
+}
+
+@layer base {
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Vazirmatn', 'Plus Jakarta Sans', sans-serif;
+        background-color: var(--color-background);
+        color: var(--color-on-background);
+    }
+
+    body {
+        overscroll-behavior: none;
+    }
+
+    /* Support Persian & Arabic text rendering */
+    [dir="rtl"] {
+        text-align: right;
+    }
+
+    /* Ensure selects & options inherit surface theme colors */
+    select option {
+        background-color: var(--color-surface-container);
+        color: var(--color-on-surface);
+    }
+
+    /* Material Symbols Outlined Icon styling */
+    .material-symbols-outlined {
+        font-family: 'Material Symbols Outlined' !important;
+        font-weight: normal;
+        font-style: normal;
+        line-height: 1;
+        letter-spacing: normal;
+        text-transform: none;
+        display: inline-block;
+        white-space: nowrap;
+        word-wrap: normal;
+        direction: ltr;
+        -webkit-font-smoothing: antialiased;
+    }
+}
+
+/* ==========================================================================
+   GLASSMORPHISM & AMBIENT LUMINOUS DESIGN SYSTEM UTILITIES
+   ========================================================================== */
+
+/* Light Mode Glass */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.75) !important;
+    backdrop-filter: blur(18px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(160%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.85) !important;
+    box-shadow: 0 12px 32px -4px rgba(0, 103, 103, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.78) !important;
+    backdrop-filter: blur(16px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(150%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.82) !important;
+    box-shadow: 0 8px 24px -4px rgba(0, 103, 103, 0.06), 0 2px 6px -1px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+}
+
+.glass-subtle {
+    background: rgba(255, 255, 255, 0.62) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.7) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85), 0 2px 8px rgba(0, 103, 103, 0.03) !important;
+}
+
+.glass-header {
+    background: rgba(255, 255, 255, 0.82) !important;
+    backdrop-filter: blur(20px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.9) !important;
+    box-shadow: 0 8px 24px -4px rgba(0, 103, 103, 0.05), inset 0 -1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+.glass-pill {
+    background: rgba(255, 255, 255, 0.82) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.9) !important;
+    box-shadow: 0 4px 14px -2px rgba(0, 103, 103, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
+.chat-box-input {
+    background: rgba(255, 255, 255, 0.72) !important;
+    border: 1px solid rgba(255, 255, 255, 0.9) !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02), 0 2px 6px rgba(0, 103, 103, 0.03) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    transition: all 0.2s ease !important;
+}
+
+.chat-box-input:focus-within,
+.chat-box-input:hover {
+    border-color: rgba(0, 103, 103, 0.4) !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    box-shadow: 0 4px 16px -2px rgba(0, 103, 103, 0.12), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+
+/* Dark Mode Glass Overrides */
+.dark .glass-panel {
+    background: rgba(18, 33, 49, 0.78) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.5), 0 4px 12px -2px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .glass-card {
+    background: rgba(18, 33, 49, 0.75) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+}
+
+.dark .glass-subtle {
+    background: rgba(13, 28, 45, 0.65) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark .glass-header {
+    background: rgba(1, 15, 31, 0.88) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.5), inset 0 -1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+.dark .glass-pill {
+    background: rgba(18, 33, 49, 0.82) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .chat-box-input {
+    background: rgba(18, 33, 49, 0.72) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark .chat-box-input:focus-within,
+.dark .chat-box-input:hover {
+    border-color: rgba(78, 218, 217, 0.5) !important;
+    background: rgba(28, 43, 60, 0.92) !important;
+    box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+.glow-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(100px);
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+/* Hide scrollbars cleanly */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
